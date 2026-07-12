@@ -18,9 +18,8 @@ export default function About() {
       </Reveal>
       <Reveal delay={200}>
         <p className="mt-12 max-w-xl font-mono text-sm leading-relaxed text-ink-dim">
-          I&apos;m building Cuncuna™ — a learning app for kids in Chile — and
-          previously worked across product design, front-end engineering and
-          branding.
+          I work across product design, front-end engineering and branding —
+          from first sketch to shipped product.
         </p>
       </Reveal>
     </section>

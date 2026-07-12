@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { projects } from "../data/projects";
+import ProjectMedia from "./ProjectMedia";
 import Reveal from "./Reveal";
 
 export default function WorkList() {
@@ -9,24 +11,32 @@ export default function WorkList() {
           (SELECTED WORK)
         </p>
       </Reveal>
-      <div className="mt-10 border-t border-white/15">
+
+      <div className="mt-12 grid grid-cols-1 gap-x-6 gap-y-16 lg:grid-cols-12 lg:gap-y-24">
         {projects.map((project, i) => (
-          <Reveal key={project.title} delay={i * 60}>
-            <a
-              href={project.href}
-              className="project-row group flex items-baseline justify-between gap-6 border-b border-white/15 px-2 py-8 md:py-10"
-            >
-              <span className="hidden w-48 shrink-0 font-mono text-xs tracking-widest text-ink-dim group-hover:text-ink md:block">
-                {project.category}
-              </span>
-              <span className="row-title display flex-1 text-[9vw] md:text-[4vw]">
-                {project.title}
-              </span>
-              <span className="shrink-0 font-mono text-xs tracking-widest text-ink-dim group-hover:text-ink">
-                {project.year}
-              </span>
-            </a>
-          </Reveal>
+          <article key={project.slug} className={`col-span-1 ${project.layout}`}>
+            <Reveal delay={(i % 3) * 80}>
+              <Link href={`/work/${project.slug}`} className="group block space-y-3">
+                <ProjectMedia
+                  image={project.image}
+                  ratio={project.ratio}
+                  hue={project.hue}
+                  alt={project.title}
+                  watermark={project.title}
+                  badge={project.category}
+                  hoverZoom
+                />
+                <div className="flex items-baseline justify-between gap-3 font-mono text-xs uppercase tracking-widest">
+                  <span className="min-w-0 flex-1 truncate text-ink">
+                    {project.title}
+                  </span>
+                  <span className="shrink-0 tabular-nums text-ink-dim">
+                    {project.year}
+                  </span>
+                </div>
+              </Link>
+            </Reveal>
+          </article>
         ))}
       </div>
     </section>
