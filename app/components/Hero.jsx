@@ -26,7 +26,7 @@ export default function Hero() {
         </h1>
         <p className="mt-10 max-w-xl font-mono text-sm leading-relaxed text-ink-dim md:text-base">
           I&apos;m Majo Paskuvan, designing and building playful digital
-          products. Currently working on Cuncuna, a learning app for kids.
+          products with craft and care.
         </p>
       </div>
 
