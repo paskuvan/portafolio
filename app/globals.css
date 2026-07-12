@@ -1,26 +1,120 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #f4f4f2;
+  --ink-dim: #9a9db8;
+  --bg: #101223;
+  --bg-deep: #0a0b18;
+  --blue: #2b3bff;
+  --blue-soft: #4a5aff;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
+  --color-bg: var(--bg);
+  --color-bg-deep: var(--bg-deep);
+  --color-blue: var(--blue);
+  --color-blue-soft: var(--blue-soft);
+  --font-display: var(--font-archivo);
+  --font-mono: var(--font-space-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-archivo), sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--blue);
+  color: var(--ink);
+}
+
+/* Big display headlines */
+.display {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+/* Crosshair decoration */
+.crosshair {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+.crosshair::before,
+.crosshair::after {
+  content: "";
+  position: absolute;
+  background: var(--ink);
+}
+.crosshair::before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+}
+.crosshair::after {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(48px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Project row hover */
+.project-row {
+  position: relative;
+  isolation: isolate;
+}
+.project-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--blue);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+}
+.project-row:hover::before {
+  transform: scaleY(1);
+  transform-origin: top;
+}
+.project-row:hover .row-title {
+  transform: translateX(1.5rem);
+}
+.row-title {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 18s linear infinite;
 }
