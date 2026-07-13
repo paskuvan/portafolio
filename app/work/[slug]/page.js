@@ -24,6 +24,8 @@ export default async function ProjectPage({ params }) {
 
   const project = projects[index];
   const next = projects[(index + 1) % projects.length];
+  const characters = project.paragraphs.join("").length;
+  const dimensions = project.gallery[0]?.dimensions ?? "—";
 
   return (
     <>
@@ -34,7 +36,7 @@ export default async function ProjectPage({ params }) {
         <Reveal>
           <h1 className="display text-[12vw] md:text-[6vw]">{project.title}</h1>
           <p className="mt-4 font-mono text-sm tracking-widest text-ink-dim">
-            {project.date}
+            {project.published}
           </p>
         </Reveal>
 
@@ -44,9 +46,11 @@ export default async function ProjectPage({ params }) {
           <p className="font-mono text-xs tracking-[0.3em] text-ink-dim">
             {project.category} — {project.year}
           </p>
-          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-ink/90 md:text-xl">
-            {project.description}
-          </p>
+          <div className="mt-6 max-w-3xl space-y-5 text-lg leading-relaxed text-ink/90 md:text-xl">
+            {project.paragraphs.map((paragraph, i) => (
+              <p key={i}>{paragraph}</p>
+            ))}
+          </div>
         </Reveal>
 
         {project.link && (
@@ -73,43 +77,72 @@ export default async function ProjectPage({ params }) {
           ))}
         </div>
 
-        <hr className="my-16 border-white/15" />
+        <Reveal>
+          <section className="mt-16 rounded-2xl bg-bg-deep p-8 md:p-10">
+            <h2 className="text-lg font-bold">Metadata</h2>
+
+            <dl className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-3">
+              <div>
+                <dt className="text-sm font-bold">Last Updated</dt>
+                <dd className="mt-2 font-mono text-sm text-ink-dim">
+                  {project.published}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-bold">Dimensions</dt>
+                <dd className="mt-2 font-mono text-sm text-ink-dim">
+                  {dimensions}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-bold">Characters</dt>
+                <dd className="mt-2 font-mono text-sm text-ink-dim">
+                  {characters}
+                </dd>
+              </div>
+            </dl>
+
+            <hr className="my-8 border-dashed border-white/15" />
+
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+              <h3 className="text-sm font-bold">Links</h3>
+              <nav className="flex flex-col gap-2 font-mono text-sm">
+                <Link href="/" className="text-ink-dim transition-colors hover:text-ink">
+                  Home
+                </Link>
+                <Link href="/#work" className="text-ink-dim transition-colors hover:text-ink">
+                  Work
+                </Link>
+                <Link href="/#contact" className="text-ink-dim transition-colors hover:text-ink">
+                  Contact
+                </Link>
+              </nav>
+              <nav className="flex flex-col gap-2 font-mono text-sm">
+                {socials.slice(1).map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    className="text-ink-dim transition-colors hover:text-ink"
+                  >
+                    {social.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          </section>
+        </Reveal>
 
         <Reveal>
-          <div className="flex flex-col gap-10 font-mono text-sm tracking-widest md:flex-row md:justify-between">
-            <nav className="flex flex-col gap-3">
-              <span className="text-xs text-ink-dim">(INDEX)</span>
-              <Link href="/" className="text-ink-dim transition-colors hover:text-ink">
-                HOME
-              </Link>
-              <Link href="/#work" className="text-ink-dim transition-colors hover:text-ink">
-                WORK
-              </Link>
-              <Link href="/#contact" className="text-ink-dim transition-colors hover:text-ink">
-                CONTACT
-              </Link>
-            </nav>
-            <nav className="flex flex-col gap-3">
-              <span className="text-xs text-ink-dim">(ELSEWHERE)</span>
-              {socials.slice(1).map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  className="text-ink-dim transition-colors hover:text-ink"
-                >
-                  {social.label}
-                </a>
-              ))}
-            </nav>
-            <div className="flex flex-col gap-3 md:items-end">
-              <span className="text-xs text-ink-dim">(NEXT PROJECT)</span>
-              <Link
-                href={`/work/${next.slug}`}
-                className="display text-2xl text-ink transition-colors hover:text-blue-soft md:text-3xl"
-              >
-                {next.title} →
-              </Link>
-            </div>
+          <div className="mt-16 flex flex-col gap-3 md:items-end">
+            <span className="font-mono text-xs tracking-widest text-ink-dim">
+              (NEXT PROJECT)
+            </span>
+            <Link
+              href={`/work/${next.slug}`}
+              className="display text-2xl text-ink transition-colors hover:text-blue-soft md:text-3xl"
+            >
+              {next.title} →
+            </Link>
           </div>
         </Reveal>
       </main>
