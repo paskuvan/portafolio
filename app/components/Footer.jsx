@@ -1,5 +1,6 @@
 import { socials } from "../data/projects";
 import Reveal from "./Reveal";
+import SplitTextReveal from "./SplitTextReveal";
 
 export default function Footer() {
   return (
@@ -15,15 +16,18 @@ export default function Footer() {
             (CONTACT)
           </p>
         </Reveal>
-        <Reveal delay={100}>
-          <h2 className="display mt-8 text-[10.5vw] md:text-[9vw]">
-            Let&apos;s create
-            <br />
-            something
-            <br />
-            <span className="text-blue-soft">extraordinary</span>
-          </h2>
-        </Reveal>
+        <SplitTextReveal
+          as="h2"
+          className="display mt-8 text-[10.5vw] md:text-[9vw]"
+          type="lines"
+          stagger={0.12}
+        >
+          Let&apos;s create
+          <br />
+          something
+          <br />
+          <span className="text-blue-soft">extraordinary</span>
+        </SplitTextReveal>
 
         <Reveal delay={200}>
           <ul className="mt-16 flex flex-col gap-3 font-mono text-sm tracking-widest md:flex-row md:gap-10">
