@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { projects } from "../data/projects";
+import Parallax from "./Parallax";
 import ProjectMedia from "./ProjectMedia";
 import Reveal from "./Reveal";
 
@@ -15,8 +16,9 @@ export default function WorkList() {
       <div className="mt-12 grid grid-cols-1 gap-x-6 gap-y-16 lg:grid-cols-12 lg:gap-y-24">
         {projects.map((project, i) => (
           <article key={project.slug} className={`col-span-1 ${project.layout}`}>
-            <Reveal delay={(i % 3) * 80}>
-              <Link href={`/work/${project.slug}`} className="group block space-y-3">
+            <Parallax amount={6 + (i % 3) * 5}>
+              <Reveal delay={(i % 3) * 80}>
+                <Link href={`/work/${project.slug}`} className="group block space-y-3">
                 <ProjectMedia
                   image={project.image}
                   ratio={project.ratio}
@@ -34,8 +36,9 @@ export default function WorkList() {
                     {project.year}
                   </span>
                 </div>
-              </Link>
-            </Reveal>
+                </Link>
+              </Reveal>
+            </Parallax>
           </article>
         ))}
       </div>
